@@ -73,6 +73,94 @@ supervised by Prof. Evangeline F. Y. Young at The Chinese University of Hong Kon
     AIG data structure from ABC to GPU, and from GPU to ABC, respectively,
     similar to the ABC9 package. 
 
+## File Structure
+
+```
+CULS/
+├── CMakeLists.txt
+├── LICENSE
+├── README.md
+├── include/                                  # Third-party header-only libraries
+│   ├── CLI11.hpp                             # Command-line parsing library
+│   ├── robin_hood.h                          # Robin Hood hash map
+│   └── cli/                                  # CLI library (interactive shell)
+│       ├── LICENSE
+│       ├── boostasiocliasyncsession.h
+│       ├── boostasioremotecli.h
+│       ├── boostasioscheduler.h
+│       ├── cli.h
+│       ├── clifilesession.h
+│       ├── clilocalsession.h
+│       ├── colorprofile.h
+│       ├── filehistorystorage.h
+│       ├── historystorage.h
+│       ├── loopscheduler.h
+│       ├── scheduler.h
+│       ├── standaloneasiocliasyncsession.h
+│       ├── standaloneasioremotecli.h
+│       ├── standaloneasioscheduler.h
+│       ├── volatilehistorystorage.h
+│       └── detail/                           # Internal implementation details
+│           ├── boostasiolib.h
+│           ├── commonprefix.h
+│           ├── fromstring.h
+│           ├── genericasioremotecli.h
+│           ├── genericasioscheduler.h
+│           ├── genericcliasyncsession.h
+│           ├── history.h
+│           ├── inputdevice.h
+│           ├── inputhandler.h
+│           ├── keyboard.h
+│           ├── linuxkeyboard.h
+│           ├── newboostasiolib.h
+│           ├── newstandaloneasiolib.h
+│           ├── oldboostasiolib.h
+│           ├── oldstandaloneasiolib.h
+│           ├── rang.h
+│           ├── server.h
+│           ├── split.h
+│           ├── standaloneasiolib.h
+│           ├── terminal.h
+│           └── winkeyboard.h
+└── src/                                      # Source code
+    ├── main.cpp                              # Entry point
+    ├── common.h                              # Shared type definitions
+    ├── aig_manager.cu / .h                   # Top-level AIG manager
+    ├── command_manager.cpp / .h             # CLI command registration
+    ├── aig/                                  # Core AIG data structure & GPU kernels
+    │   ├── mffc.cuh                          # Maximum Fanout-Free Cone (MFFC)
+    │   ├── strash.cu / .cuh                  # Structural hashing
+    │   ├── traverse.cu / .cuh               # AIG traversal utilities
+    │   └── truth.cu / .cuh                  # Truth table computation
+    ├── algorithms/                           # Logic optimization algorithms
+    │   ├── balance.cu / .h                   # AIG balancing
+    │   ├── refactor.cu / .h                  # AIG refactoring
+    │   ├── refactor_core.cu                  # Refactoring core kernels
+    │   ├── refactor_mffc.cu                  # MFFC computation for refactoring
+    │   ├── resub.cu / .h                     # AIG resubstitution
+    │   ├── resub_core.cu                     # Resubstitution core kernels
+    │   ├── resub_utils.h                     # Resubstitution utilities
+    │   ├── rewrite.cu / .h                   # AIG rewriting
+    │   ├── rewrite_library.inc               # Pre-computed rewriting library
+    │   └── sop/                              # Sum-of-Products (SOP) utilities
+    │       ├── alg_factor.cuh                # Algebraic factoring
+    │       ├── minato_isop.cuh               # Minato ISOP algorithm
+    │       └── sop.cuh                       # SOP representation
+    ├── abc_patch/                            # ABC integration patch
+    │   ├── abc_patch.cpp                     # Patch entry point
+    │   ├── abc_patch_gpucmd.cpp              # GPU command bindings for ABC
+    │   ├── abc_patch_int.h                   # Internal patch definitions
+    │   └── abc_patch_transform.cpp           # AIG conversion between ABC and GPU
+    ├── hash_table/                           # GPU hash table
+    │   └── hash_table.h
+    └── misc/                                 # Miscellaneous utilities
+        ├── print.cu / .cuh                   # Debug/info printing
+        ├── string_utils.h                    # String helper functions
+        ├── tables.cuh                        # Lookup tables
+        ├── truth_utils.cuh                   # Truth table utilities
+        └── vectors.cuh                       # GPU vector utilities
+```
+
 ## Publications
 * Shiju Lin, Jinwei Liu, Tianji Liu, Martin D.F. Wong, Evangeline F.Y. Young, 
 "NovelRewrite: Node-Level Parallel AIG Rewriting", 
